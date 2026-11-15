@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nervine Bee's Earth Botanic-tionary</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/globe.gl"></script>
+    <style>
+        :root {
+            --moss-green: #4A553B;       /* Xanh rêu đậm như banner của bạn */
+            --moss-mid: #5E6E4A;         /* Xanh rêu vừa */
+            --moss-light: #E9EFE2;       /* Xanh rêu nhạt */
+            --blush-pink: #F5D5C8;       /* Hồng phớt đào ấm như nền ảnh */
+            --blush-soft: #F9E3DA;       /* Hồng phớt sáng hơn */
+            --blush-accent: #D99B8C;     /* Hồng phớt nhấn */
+            --cream-yellow: #FCF6E3;     /* Vàng kem */
+            --cream-card: #FFFDF7;       /* Vàng kem sáng */
+            --text-dark: #2B3024;
+            --text-muted: #525949;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--blush-pink);
+            color: var(--text-dark);
+            line-height: 1.65;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .brand-name {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* ================= TOP NAVBAR (GIỐNG GOOGLE SITES CỦA BẠN) ================= */
+        .top-nav {
+            background-color: var(--moss-green);
+            color: var(--cream-yellow);
+            padding: 0.75rem 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(252, 246, 227, 0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--cream-yellow);
+        }
+
+        .brand img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .brand-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--cream-yellow);
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+            opacity: 0.85;
+        }
+
+        .nav-item:hover {
+            opacity: 1;
+            background-color: rgba(252, 246, 227, 0.12);
+        }
+
+        .nav-item.active {
+            opacity: 1;
+            background-color: var(--cream-yellow);
+            color: var(--moss-green);
+            font-weight: 700;
+        }
+
+        /* ================= BANNER ĐẦU TRANG VỚI HỌA TIẾT HOA VẼ TAY ================= */
+        .hero-banner {
+            background-color: var(--moss-green);
+            background-image: url("data:image/svg+xml,%3Csvg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D99B8C' stroke-width='14' stroke-linecap='round' opacity='0.35'%3E%3Cpath d='M65 80 C45 45, 85 45, 65 80 C100 60, 100 100, 65 80 C85 115, 45 115, 65 80 C30 100, 30 60, 65 80 Z'/%3E%3Ccircle cx='175' cy='55' r='10'/%3E%3Cpath d='M255 130 C235 95, 275 95, 255 130 C290 110, 290 150, 255 130 C275 165, 235 165, 255 130 C220 150, 220 110, 255 130 Z'/%3E%3Ccircle cx='120' cy='175' r='8'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--cream-yellow);
+            text-align: center;
+            padding: 3.8rem 1.5rem;
+            border-bottom: 4px solid var(--cream-yellow);
+        }
+
+        .hero-banner h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .hero-banner p {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--cream-yellow);
+            opacity: 0.95;
+        }
+
+        /* ================= QUẢN LÝ 3 TRANG ================= */
+        .page-section {
+            display: none;
+            flex: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2.8rem 5%;
+        }
+
+        /* ================= TRANG 1: HOME (QUẢ ĐỊA CẦU 3D + 28 QUỐC GIA) ================= */
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .globe-card {
+            background-color: #262E1E;
+            border-radius: 20px;
+            border: 3px solid var(--moss-green);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(74, 85, 59, 0.18);
+        }
+
+        .globe-toolbar {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .layer-group {
+            display: flex;
+            gap: 6px;
+            background: rgba(252, 246, 227, 0.94);
+            padding: 4px;
+            border-radius: 20px;
+            pointer-events: auto;
+        }
+
+        .layer-btn {
+            border: none;
+            background: transparent;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--moss-green);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .layer-btn.active {
+            background-color: var(--moss-green);
+            color: var(--cream-yellow);
+        }
+
+        #globeViz {
+            width: 100%;
+            height: 500px;
+            cursor: grab;
+        }
+
+        .country-card {
+            background-color: var(--cream-yellow);
+            border: 2px solid var(--moss-green);
+            border-radius: 20px;
+            padding: 1.6rem;
+            box-shadow: 0 10px 25px rgba(74, 85, 59, 0.12);
+        }
+
+        .country-select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--moss-green);
+            background-color: #fff;
+            color: var(--moss-green);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+        }
+
+        .country-title-box {
+            background-color: var(--moss-green);
+            color: var(--cream-yellow);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .country-title-box h2 {
+            font-size: 1.35rem;
+        }
+
+        .region-pill {
+            background-color: var(--blush-pink);
+            color: var(--moss-green);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .nature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 1.2rem;
+        }
+
+        .nature-item {
+            background-color: var(--blush-soft);
+            padding: 10px 12px;
+            border-radius: 12px;
+            border-left: 4px solid var(--moss-green);
+        }
+
+        .nature-item small {
+            display: block;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .nature-item strong {
+            font-size: 1rem;
+            color: var(--moss-green);
+        }
+
+        .flowers-box {
+            background-color: #fff;
+            border: 1.5px dashed var(--blush-accent);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .flowers-box h3 {
+            font-size: 1rem;
+            color: var(--moss-green);
+            margin-bottom: 0.6rem;
+        }
+
+        .flower-ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .flower-li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--cream-yellow);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .badge-native {
+            background-color: var(--moss-green);
+            color: var(--cream-yellow);
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .badge-common {
+            background-color: var(--blush-pink);
+            color: var(--moss-green);
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .bio-summary {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            background-color: var(--moss-light);
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        /* ================= TRANG 2: ABOUT US (Y HỆT BỐ CỤC 2 CỘT TRONG ẢNH CỦA BẠN) ================= */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .about-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .about-logo-box {
+            background-color: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(74, 85, 59, 0.1);
+            border: 2px solid var(--cream-yellow);
+        }
+
+        .about-logo-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .fun-fact-box {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background-color: var(--cream-yellow);
+            padding: 1.1rem;
+            border-radius: 14px;
+            border-left: 4px solid var(--moss-green);
+        }
+
+        .fun-fact-box p {
+            margin-bottom: 0.8rem;
+        }
+
+        .fun-fact-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-right {
+            background-color: var(--cream-yellow);
+            padding: 2.2rem;
+            border-radius: 20px;
+            border: 1.5px solid rgba(74, 85, 59, 0.2);
+            box-shadow: 0 6px 20px rgba(74, 85, 59, 0.08);
+        }
+
+        .lang-block {
+            margin-bottom: 2rem;
+        }
+
+        .lang-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .lang-label {
+            font-weight: 700;
+            color: var(--moss-green);
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+            display: inline-block;
+            background-color: var(--blush-pink);
+            padding: 3px 12px;
+            border-radius: 8px;
+        }
+
+        .lang-block p {
+            margin-bottom: 0.9rem;
+            font-size: 0.98rem;
+        }
+
+        .lang-block.en p {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* ================= TRANG 3: SOURCES (Y HỆT NỘI DUNG & BỐ CỤC TRONG ẢNH CỦA BẠN) ================= */
+        .sources-wrapper {
+            max-width: 820px;
+            margin: 0 auto;
+            background-color: var(--cream-yellow);
+            padding: 2.5rem 3rem;
+            border-radius: 22px;
+            border: 1.5px solid rgba(74, 85, 59, 0.2);
+            box-shadow: 0 8px 24px rgba(74, 85, 59, 0.08);
+        }
+
+        .sources-block {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px dashed var(--blush-accent);
+        }
+
+        .sources-block:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .sources-block h2 {
+            font-size: 1.45rem;
+            color: var(--moss-green);
+            margin-bottom: 0.4rem;
+        }
+
+        .sources-block h3 {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-top: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sources-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sources-list li {
+            font-size: 0.96rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .sources-list li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: var(--moss-green);
+            font-weight: 700;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--moss-green);
+            color: var(--cream-yellow);
+            text-align: center;
+            padding: 1.3rem 4%;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 860px) {
+            .home-grid, .about-layout {
+                grid-template-columns: 1fr;
+            }
+            .about-logo-box {
+                max-width: 240px;
+                margin: 0 auto;
+            }
+            .top-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .sources-wrapper {
+                padding: 1.8rem 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THANH ĐIỀU HƯỚNG 3 TRANG Y HỆT GOOGLE SITES CỦA BẠN -->
+    <header class="top-nav">
+        <a class="brand" onclick="switchPage('home')">
+            <img src="logo.jpg" alt="Nervine Bee Logo">
+            <span class="brand-name">Nervine Bee's Earth Botanic-tionary</span>
+        </a>
+        <nav class="nav-links">
+            <button class="nav-item active" id="nav-home" onclick="switchPage('home')">Home</button>
+            <button class="nav-item" id="nav-about" onclick="switchPage('about')">About us</button>
+            <button class="nav-item" id="nav-sources" onclick="switchPage('sources')">Sources</button>
+        </nav>
+    </header>
+
+    <!-- ================= TRANG 1: HOME ================= -->
+    <section id="page-home" class="page-section active">
+        <div class="hero-banner">
+            <h1>Nervine Bee's Earth Botanic-tionary</h1>
+            <p>Từ điển Sinh học & Thực vật Trái Đất 3D</p>
+        </div>
+
+        <div class="container">
+            <div class="home-grid">
+                <!-- Quả địa cầu 3D tương tác -->
+                <div class="globe-card">
+                    <div class="globe-toolbar">
+                        <div class="layer-group">
+                            <button class="layer-btn active" onclick="setLayer('default', this)">Sinh thái tổng hợp</button>
+                            <button class="layer-btn" onclick="setLayer('moisture', this)">Độ ẩm đất (SMAP)</button>
+                            <button class="layer-btn" onclick="setLayer('rainfall', this)">Lượng mưa</button>
+                        </div>
+                    </div>
+                    <div id="globeViz"></div>
+                </div>
+
+                <!-- Bảng tra cứu 28 quốc gia -->
+                <aside class="country-card">
+                    <label for="countrySelect" style="font-size:0.85rem; font-weight:700; color:var(--moss-green); display:block; margin-bottom:6px;">
+                        Khám phá 28 quốc gia (Countries & Naturedata):
+                    </label>
+                    <select id="countrySelect" class="country-select" onchange="selectCountry(this.value)"></select>
+
+                    <div class="country-title-box">
+                        <div>
+                            <h2 id="cName">Việt Nam (Vietnam)</h2>
+                            <small id="cArea" style="opacity:0.9;">Diện tích: 331,212 km²</small>
+                        </div>
+                        <span class="region-pill" id="cRegion">Đông Nam Á</span>
+                    </div>
+
+                    <div class="nature-grid">
+                        <div class="nature-item">
+                            <small>Nhiệt độ trung bình</small>
+                            <strong id="cTemp">25.4 °C</strong>
+                        </div>
+                        <div class="nature-item">
+                            <small>Lượng mưa năm</small>
+                            <strong id="cRain">1,821 mm</strong>
+                        </div>
+                        <div class="nature-item">
+                            <small>Độ ẩm đất bề mặt</small>
+                            <strong id="cMoisture">34% (Cao)</strong>
+                        </div>
+                        <div class="nature-item">
+                            <small>Khí hậu đặc trưng</small>
+                            <strong id="cClimate">Nhiệt đới gió mùa</strong>
+                        </div>
+                    </div>
+
+                    <div class="flowers-box">
+                        <h3>🌸 Các loài hoa phổ biến (Không tính quốc hoa)</h3>
+                        <ul class="flower-ul" id="cFlowers"></ul>
+                    </div>
+
+                    <div class="bio-summary" id="cBio"></div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRANG 2: ABOUT US (GIỮ NGUYÊN NỘI DUNG TỪ ẢNH CỦA BẠN) ================= -->
+    <section id="page-about" class="page-section">
+        <div class="hero-banner">
+            <h1>Some basic information about us ☀️</h1>
+            <p>Một số thông tin cơ bản về chúng tôi</p>
+        </div>
+
+        <div class="container">
+            <div class="about-layout">
+                <!-- Cột trái: Logo con ong + Fun fact song ngữ -->
+                <div class="about-left">
+                    <div class="about-logo-box">
+                        <img src="logo.jpg" alt="Nervine Bee Logo">
+                    </div>
+                    <div class="fun-fact-box">
+                        <p><strong>Sự thật thú vị:</strong> "Nervine Bee" mang ý nghĩa là "Chú ong mật dễ chịu".</p>
+                        <p>"Nervine" là thuật ngữ để chỉ những loại thảo dược có tác dụng hỗ trợ hoặc điều hòa hệ thần kinh, còn "Bee" là ong.</p>
+                        <hr style="border:none; border-top:1px dashed var(--blush-accent); margin: 0.8rem 0;">
+                        <p style="font-style:italic;"><strong>Fun fact:</strong> "Nervine Bee" means "The calming honey bee."</p>
+                        <p style="font-style:italic;">"Nervine" is a term referring to herbs that support or regulate the nervous system, while "Bee" just means bee.</p>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Giới thiệu Tiếng Việt & Tiếng Anh (Không còn 2 bảng vấn đề/giải pháp) -->
+                <div class="about-right">
+                    <div class="lang-block">
+                        <span class="lang-label">TIẾNG VIỆT:</span>
+                        <p>Xin chào mọi người, tôi là Nervine Bee, người sáng tạo trang web này.</p>
+                        <p>Tôi cảm thấy khá thích thú với cây cối và hoa cỏ được một thời gian rồi, nên tôi hình dung được đây là dịp hoàn hảo để tìm hiểu về chủ đề này, cũng như trải nghiệm những thứ mới - Như làm một website.</p>
+                        <p>Qua Từ điển Sinh học Trái đất, tôi đặt mục tiêu giới thiệu những nét đặc trưng về sinh học của từng quốc gia qua thông tin cơ bản, nhạc và tranh ảnh.</p>
+                        <p>Tôi hy vọng trang web này hữu ích (Hoặc thú vị) đối với tất cả các bạn. Cảm ơn vì đã dành thời gian tại đây!</p>
+                    </div>
+
+                    <div class="lang-block en">
+                        <span class="lang-label">TIẾNG ANH:</span>
+                        <p>Hello there, I'm Nervine Bee, the developer behind this website.</p>
+                        <p>I've been pretty interested in plants and flowers for a while now, so I figured this was the perfect occasion for me to do research on this topic, and also experience something new - Making a website.</p>
+                        <p>Through Earth Botanic-tionary, I strive to introduce others to each nation's unique botanical specialties, via basic facts, music and doodles.</p>
+                        <p>I hope this website was useful (Or entertaining) for you all. Thank for your time!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRANG 3: SOURCES (GIỮ NGUYÊN NỘI DUNG TỪ ẢNH CỦA BẠN) ================= -->
+    <section id="page-sources" class="page-section">
+        <div class="hero-banner">
+            <h1>Nguồn thông tin chúng tôi sử dụng</h1>
+            <p>Where we source our info from</p>
+        </div>
+
+        <div class="container">
+            <div class="sources-wrapper">
+                <!-- Phần Tiếng Việt -->
+                <div class="sources-block">
+                    <h2>Vậy, chúng tôi lấy thông tin và nội dung từ đâu?</h2>
+                    <p style="font-weight:700; color:var(--moss-green);">Đây là những nguồn thông tin (và cảm hứng) của chúng tôi:</p>
+                    <ul class="sources-list">
+                        <li>Cơ sở dữ liệu của NASA Space Apps Challenge 2026.</li>
+                        <li>Trang web chính thức của NASA.</li>
+                        <li>Danh mục dữ liệu mở của NASA.</li>
+                        <li>NASA SMAP.</li>
+                        <li>NASA GISS Phân tích Nhiệt độ.</li>
+                        <li>UNESCO WRB.</li>
+                        <li>Các vùng sinh thái trên cạn của thế giới (theo WWF) &amp; Các vùng sinh thái (theo RESOLVE, 2017).</li>
+                        <li>GBIF.</li>
+                        <li>UNEP-WCMC.</li>
+                        <li>CIA World Factbook.</li>
+                        <li>Cuốn "The Herb Book" và ấn phẩm đi kèm, "The Tree Book".</li>
+                        <li>"Quyền năng của hoa".</li>
+                        <li>Wikipedia.</li>
+                    </ul>
+                    <p>Khá nhiều phải không nào?</p>
+
+                    <h3>Vậy còn âm nhạc và hình vẽ thì sao?</h3>
+                    <p>Tôi tự vẽ các loài hoa bằng ứng dụng Sketchbook (Một ứng dụng miễn phí!), sau đó sử dụng EGANE (Một trang web tổng hợp âm thanh – bạn cũng có thể dùng thử đấy!) để tùy chỉnh các thông số cho đến khi ưng ý. Cuối cùng, tôi ghi âm lại rồi đưa vào các cửa sổ bật lên (pop-up)!</p>
+
+                    <h3>Còn các hình ảnh khác thì sao?</h3>
+                    <p>Tôi tìm kiếm trên mạng những hình ảnh không đánh bản quyền để sử dụng!</p>
+                </div>
+
+                <!-- Phần Tiếng Anh -->
+                <div class="sources-block">
+                    <h2>So, where do we source our information and content from?</h2>
+                    <p style="font-weight:700; color:var(--moss-green);">This is where we source our information (And inspiration) from:</p>
+                    <ul class="sources-list">
+                        <li>NASA Space Apps Challenge 2026 database.</li>
+                        <li>NASA's official website.</li>
+                        <li>NASA open data catalogue.</li>
+                        <li>NASA SMAP.</li>
+                        <li>NASA GISS Temperature Analysis.</li>
+                        <li>UNESCO WRB.</li>
+                        <li>Terrestrial Ecoregions of the World (by WWF) &amp; Ecoregions (by RESOLVE, 2017).</li>
+                        <li>GBIF.</li>
+                        <li>UNEP-WCMC.</li>
+                        <li>CIA World Factbook.</li>
+                        <li>"The Herb Book" and its counterpart, "The Tree Book".</li>
+                        <li>"Quyền năng của hoa" ("The power of flowers").</li>
+                        <li>Wikipedia.</li>
+                    </ul>
+                    <p>That's quite a lot, isn't it?</p>
+
+                    <h3>So... How do you make the music and drawings?</h3>
+                    <p>I draw the flowers myself in Sketchbook (It's a free to download app!), then I go into EGANE (Music synthesizer website, yes, you can also use it!), play around with the settings until I'm satisfied. After that, I record it and put it in the popups!</p>
+
+                    <h3>What about the pictures?</h3>
+                    <p>I source them online by searching for uncopyrighted pictures!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Nervine Bee's Earth Botanic-tionary • NASA Space Apps Challenge</p>
+    </footer>
+
+    <script>
+        // DỮ LIỆU 28 QUỐC GIA (COUNTRIES, FLOWERS & NATUREDATA)
+        const countriesData = [
+            { name: "Việt Nam (Vietnam)", region: "Đông Nam Á", lat: 14.0583, lng: 108.2772, area: "331,212 km²", temp: "25.4 °C", rain: "1,821 mm", moisture: "34% (Cao)", moistureVal: 0.85, rainVal: 0.78, climate: "Nhiệt đới gió mùa", flowers: [{ name: "Hoa Mai Vàng (Apricot Blossom)", type: "Native" }, { name: "Hoa Đào (Peach Blossom)", type: "Native" }, { name: "Hoa Phượng Vĩ (Royal Poinciana)", type: "Common" }], bio: "Hệ sinh thái rừng nhiệt đới đa dạng bậc nhất Đông Nam Á với hơn 11.000 loài thực vật bậc cao." },
+            { name: "Nhật Bản (Japan)", region: "Đông Á", lat: 36.2048, lng: 138.2529, area: "377,975 km²", temp: "14.8 °C", rain: "1,668 mm", moisture: "31% (Ổn định)", moistureVal: 0.75, rainVal: 0.72, climate: "Ôn đới hải dương", flowers: [{ name: "Hoa Tử Đằng (Wisteria)", type: "Native" }, { name: "Hoa Cẩm Tú Cầu (Hydrangea)", type: "Native" }, { name: "Hoa Trà (Camellia)", type: "Native" }], bio: "Địa hình trải dài từ cận Bắc Cực đến cận nhiệt đới tạo nên hệ thực vật bốn mùa rõ rệt." },
+            { name: "Brazil", region: "Nam Mỹ", lat: -14.2350, lng: -51.9253, area: "8,515,767 km²", temp: "25.5 °C", rain: "1,761 mm", moisture: "38% (Rất cao)", moistureVal: 0.92, rainVal: 0.82, climate: "Nhiệt đới ẩm & Xích đạo", flowers: [{ name: "Hoa Chuông Vàng (Golden Trumpet)", type: "Native" }, { name: "Hoa Thiên Điểu (Bird of Paradise)", type: "Common" }, { name: "Hoa Bông Giấy (Bougainvillea)", type: "Native" }], bio: "Sở hữu phần lớn rừng mưa Amazon – kho tàng đa dạng sinh học lớn nhất hành tinh." },
+            { name: "Hà Lan (Netherlands)", region: "Tây Âu", lat: 52.1326, lng: 5.2913, area: "41,543 km²", temp: "10.5 °C", rain: "840 mm", moisture: "35% (Cao)", moistureVal: 0.86, rainVal: 0.45, climate: "Ôn đới hải dương", flowers: [{ name: "Hoa Thủy Tiên Vàng (Daffodil)", type: "Native" }, { name: "Hoa Nghệ Tây (Crocus)", type: "Common" }, { name: "Hoa Lan Dạ Hương (Hyacinth)", type: "Common" }], bio: "Vùng đất thấp ven biển với hệ thống đất phù sa màu mỡ, trung tâm lai tạo thực vật có củ." },
+            { name: "Ai Cập (Egypt)", region: "Bắc Phi", lat: 26.8206, lng: 30.8025, area: "1,002,450 km²", temp: "22.8 °C", rain: "51 mm", moisture: "8% (Rất khô)", moistureVal: 0.15, rainVal: 0.05, climate: "Hoang mạc khô hạn", flowers: [{ name: "Hoa Bông Vải (Cotton Flower)", type: "Common" }, { name: "Hoa Nhài Ả Rập (Arabian Jasmine)", type: "Common" }, { name: "Hoa Acacia Sa Mạc (Desert Acacia)", type: "Native" }], bio: "Thực vật tập trung dọc lưu vực sông Nile và các ốc đảo với khả năng chịu hạn đặc biệt." },
+            { name: "Canada", region: "Bắc Mỹ", lat: 56.1304, lng: -106.3468, area: "9,984,670 km²", temp: "-5.3 °C", rain: "537 mm", moisture: "29% (Trung bình)", moistureVal: 0.68, rainVal: 0.35, climate: "Cận Bắc Cực & Ôn đới", flowers: [{ name: "Hoa Mao Lương (Buttercup)", type: "Native" }, { name: "Hoa Trillium Trắng (White Trillium)", type: "Native" }, { name: "Hoa Anh Thảo Rừng (Woodland Primrose)", type: "Native" }], bio: "Vành đai rừng phương Bắc (Boreal forest) rộng lớn cùng hệ thực vật đài nguyên chịu lạnh." },
+            { name: "Úc (Australia)", region: "Châu Đại Dương", lat: -25.2744, lng: 133.7751, area: "7,692,024 km²", temp: "21.9 °C", rain: "534 mm", moisture: "14% (Khô)", moistureVal: 0.28, rainVal: 0.32, climate: "Bán khô hạn & Nhiệt đới", flowers: [{ name: "Hoa Waratah Đỏ (NSW Waratah)", type: "Native" }, { name: "Hoa Banksia (Banksia)", type: "Native" }, { name: "Hoa Kangaroo Paw (Kangaroo Paw)", type: "Native" }], bio: "Hơn 80% loài thực vật có hoa tại Úc là loài đặc hữu chỉ xuất hiện tự nhiên tại châu lục này." },
+            { name: "Pháp (France)", region: "Tây Âu", lat: 46.2276, lng: 2.2137, area: "551,695 km²", temp: "11.8 °C", rain: "867 mm", moisture: "27% (Ổn định)", moistureVal: 0.64, rainVal: 0.48, climate: "Ôn đới & Địa Trung Hải", flowers: [{ name: "Hoa Oải Hương (Lavender)", type: "Native" }, { name: "Hoa Anh Túc Đỏ (Corn Poppy)", type: "Native" }, { name: "Hoa Hướng Dương (Sunflower)", type: "Common" }], bio: "Sự giao thoa giữa khí hậu Đại Tây Dương, dãy Alps và Địa Trung Hải nuôi dưỡng thảm hoa phong phú." },
+            { name: "Ấn Độ (India)", region: "Nam Á", lat: 20.5937, lng: 78.9629, area: "3,287,263 km²", temp: "24.8 °C", rain: "1,083 mm", moisture: "26% (Theo mùa)", moistureVal: 0.60, rainVal: 0.58, climate: "Nhiệt đới gió mùa", flowers: [{ name: "Hoa Vạn Thọ (Marigold)", type: "Common" }, { name: "Hoa Nhài Ấn Độ (Mogra Jasmine)", type: "Native" }, { name: "Hoa Dâm Bụt Đỏ (Hibiscus)", type: "Native" }], bio: "Sở hữu 4 điểm nóng đa dạng sinh học toàn cầu từ dãy Himalaya đến rừng mưa Tây Ghats." },
+            { name: "Hàn Quốc (South Korea)", region: "Đông Á", lat: 35.9078, lng: 127.7669, area: "100,210 km²", temp: "12.5 °C", rain: "1,274 mm", moisture: "30% (Ổn định)", moistureVal: 0.72, rainVal: 0.62, climate: "Ôn đới lục địa ẩm", flowers: [{ name: "Hoa Đỗ Quyên (Royal Azalea)", type: "Native" }, { name: "Hoa Chuông Vàng Hàn Quốc (Forsythia)", type: "Native" }, { name: "Hoa Cúc Vạn Thọ Rừng (Korean Chrysanthemum)", type: "Native" }], bio: "Địa hình đồi núi chiếm 70% diện tích với các quần xã hoa mùa xuân đặc trưng trên sườn núi." },
+            { name: "Thái Lan (Thailand)", region: "Đông Nam Á", lat: 15.8700, lng: 100.9925, area: "513,120 km²", temp: "27.2 °C", rain: "1,622 mm", moisture: "33% (Cao)", moistureVal: 0.80, rainVal: 0.74, climate: "Nhiệt đới xavan", flowers: [{ name: "Hoa Lan Hồ Điệp (Moth Orchid)", type: "Native" }, { name: "Hoa Sứ Trắng (Frangipani)", type: "Common" }, { name: "Hoa Nghệ Tây Xiêm (Siam Tulip)", type: "Native" }], bio: "Trung tâm đa dạng các loài phong lan nhiệt đới với hơn 1.300 loài lan bản địa." },
+            { name: "Hoa Kỳ (United States)", region: "Bắc Mỹ", lat: 37.0902, lng: -95.7129, area: "9,833,517 km²", temp: "11.5 °C", rain: "715 mm", moisture: "24% (Đa dạng)", moistureVal: 0.55, rainVal: 0.42, climate: "Đa đới khí hậu", flowers: [{ name: "Hoa Anh Túc California (California Poppy)", type: "Native" }, { name: "Hoa Cúc Tím (Purple Coneflower)", type: "Native" }, { name: "Hoa Mộc Lan (Southern Magnolia)", type: "Native" }], bio: "Trải dài qua nhiều đới khí hậu từ sa mạc Mojave, thảo nguyên Trung Tây đến rừng ôn đới." },
+            { name: "Vương quốc Anh (United Kingdom)", region: "Tây Âu", lat: 55.3781, lng: -3.4360, area: "242,495 km²", temp: "9.4 °C", rain: "1,220 mm", moisture: "36% (Cao)", moistureVal: 0.88, rainVal: 0.60, climate: "Ôn đới hải dương ẩm", flowers: [{ name: "Hoa Chuông Xanh (English Bluebell)", type: "Native" }, { name: "Hoa Anh Thảo Vàng (Primrose)", type: "Native" }, { name: "Hoa Thạch Nam (Heather)", type: "Native" }], bio: "Các cánh rừng sồi cổ thụ và vùng đồng cỏ ẩm ướt là môi trường lý tưởng cho thảm hoa dại." },
+            { name: "Đức (Germany)", region: "Trung Âu", lat: 51.1657, lng: 10.4515, area: "357,022 km²", temp: "9.6 °C", rain: "789 mm", moisture: "28% (Ổn định)", moistureVal: 0.66, rainVal: 0.46, climate: "Ôn đới chuyển tiếp", flowers: [{ name: "Hoa Thanh Cúc (Cornflower)", type: "Native" }, { name: "Hoa Nhung Tuyết (Edelweiss)", type: "Native" }, { name: "Hoa Cúc La Mã (Chamomile)", type: "Native" }], bio: "Hệ sinh thái rừng hỗn giao Trung Âu và vùng núi cao Bavaria bảo tồn nhiều thảo dược quý." },
+            { name: "Ý (Italy)", region: "Nam Âu", lat: 41.8719, lng: 12.5674, area: "301,340 km²", temp: "13.9 °C", rain: "832 mm", moisture: "22% (Vừa phải)", moistureVal: 0.50, rainVal: 0.47, climate: "Địa Trung Hải", flowers: [{ name: "Hoa Anh Thảo Rừng Ý (Cyclamen)", type: "Native" }, { name: "Hoa Trúc Đào (Oleander)", type: "Native" }, { name: "Hoa Mimosa Vàng (Silver Wattle)", type: "Common" }], bio: "Bán đảo Địa Trung Hải với mùa hè nắng ấm và mùa đông ôn hòa tạo nên hệ thực vật đặc sắc." },
+            { name: "Tây Ban Nha (Spain)", region: "Nam Âu", lat: 40.4637, lng: -3.7492, area: "505,990 km²", temp: "14.5 °C", rain: "636 mm", moisture: "18% (Khô vừa)", moistureVal: 0.38, rainVal: 0.36, climate: "Địa Trung Hải & Bán khô hạn", flowers: [{ name: "Hoa Hương Thảo (Rosemary Blossom)", type: "Native" }, { name: "Hoa Nham Lê (Rockrose)", type: "Native" }, { name: "Hoa Cam (Orange Blossom)", type: "Common" }], bio: "Quốc gia có mức độ đa dạng thực vật bậc cao lớn nhất châu Âu với hơn 8.000 loài." },
+            { name: "Mexico", region: "Bắc Mỹ", lat: 23.6345, lng: -102.5528, area: "1,964,375 km²", temp: "21.3 °C", rain: "758 mm", moisture: "21% (Vừa phải)", moistureVal: 0.46, rainVal: 0.44, climate: "Nhiệt đới & Khô hạn", flowers: [{ name: "Hoa Cúc Vạn Thọ Mexico (Cempasúchil)", type: "Native" }, { name: "Hoa Trạng Nguyên (Poinsettia)", type: "Native" }, { name: "Hoa Huệ Trắng (Tuberose)", type: "Native" }], bio: "Quê hương nguyên thủy của nhiều loài hoa cảnh nổi tiếng thế giới nhờ địa hình cao nguyên và rừng nhiệt đới." },
+            { name: "Argentina", region: "Nam Mỹ", lat: -38.4161, lng: -63.6167, area: "2,780,400 km²", temp: "14.8 °C", rain: "591 mm", moisture: "23% (Trung bình)", moistureVal: 0.52, rainVal: 0.35, climate: "Ôn đới & Cận nhiệt đới", flowers: [{ name: "Hoa Phượng Tím (Jacaranda)", type: "Native" }, { name: "Hoa Lạc Tiên (Passionflower)", type: "Native" }, { name: "Hoa Bông Gòn Hồng (Silk Floss Flower)", type: "Native" }], bio: "Trải dài từ vùng cận nhiệt đới phía Bắc đến vùng Patagonia lạnh giá ở cực Nam." },
+            { name: "Nam Phi (South Africa)", region: "Nam Phi", lat: -30.5595, lng: 22.9375, area: "1,221,037 km²", temp: "17.8 °C", rain: "495 mm", moisture: "17% (Khô vừa)", moistureVal: 0.36, rainVal: 0.28, climate: "Cận nhiệt đới & Địa Trung Hải", flowers: [{ name: "Hoa Strelitzia (Crane Flower)", type: "Native" }, { name: "Hoa Thanh Anh (Agapanthus)", type: "Native" }, { name: "Hoa Freesia (Freesia)", type: "Native" }], bio: "Sở hữu Vương quốc Thực vật Cape – vùng hệ thực vật nhỏ nhất nhưng giàu loài đặc hữu nhất thế giới." },
+            { name: "Kenya", region: "Đông Phi", lat: -0.0236, lng: 37.9062, area: "580,367 km²", temp: "24.7 °C", rain: "630 mm", moisture: "20% (Theo mùa)", moistureVal: 0.44, rainVal: 0.37, climate: "Xích đạo & Xavan", flowers: [{ name: "Hoa Hồng Cao Nguyên (Highland Rose)", type: "Common" }, { name: "Hoa Huệ Đuốc (Red Hot Poker)", type: "Native" }, { name: "Hoa Ngũ Sắc (Lantana)", type: "Common" }], bio: "Vùng cao nguyên Rift Valley với khí hậu mát mẻ quanh năm rất thuận lợi cho thực vật có hoa." },
+            { name: "Morocco", region: "Bắc Phi", lat: 31.7917, lng: -7.0926, area: "446,550 km²", temp: "18.1 °C", rain: "346 mm", moisture: "15% (Khô)", moistureVal: 0.30, rainVal: 0.20, climate: "Địa Trung Hải & Bán hoang mạc", flowers: [{ name: "Hoa Hồng Đan Mạch (Damask Rose)", type: "Common" }, { name: "Hoa Hạnh Nhân (Almond Blossom)", type: "Common" }, { name: "Hoa Diên Vĩ Atlas (Atlas Iris)", type: "Native" }], bio: "Dãy núi Atlas ngăn cách gió sa mạc Sahara tạo nên các thung lũng hoa độc đáo." },
+            { name: "Indonesia", region: "Đông Nam Á", lat: -0.7893, lng: 113.9213, area: "1,904,569 km²", temp: "26.1 °C", rain: "2,702 mm", moisture: "41% (Rất cao)", moistureVal: 0.96, rainVal: 0.95, climate: "Xích đạo ẩm", flowers: [{ name: "Hoa Rafflesia (Corpse Lily)", type: "Native" }, { name: "Hoa Sứ Bali (Bali Plumeria)", type: "Common" }, { name: "Hoa Ngọc Lan Tây (Ylang-Ylang)", type: "Native" }], bio: "Quốc gia quần đảo xích đạo với lượng mưa dồi dào và hệ rừng mưa nhiệt đới cực kỳ phong phú." },
+            { name: "Malaysia", region: "Đông Nam Á", lat: 4.2105, lng: 101.9758, area: "330,803 km²", temp: "25.9 °C", rain: "2,875 mm", moisture: "40% (Rất cao)", moistureVal: 0.94, rainVal: 0.98, climate: "Xích đạo ẩm", flowers: [{ name: "Hoa Lan Hài (Slipper Orchid)", type: "Native" }, { name: "Hoa Dây Leo Sử Quân Tử (Rangoon Creeper)", type: "Native" }, { name: "Hoa Trang Đỏ (Ixora)", type: "Native" }], bio: "Rừng mưa cổ đại trên bán đảo Mã Lai và đảo Borneo chứa hàng nghìn loài thực vật đặc hữu." },
+            { name: "Philippines", region: "Đông Nam Á", lat: 12.8797, lng: 121.7740, area: "300,000 km²", temp: "26.6 °C", rain: "2,348 mm", moisture: "37% (Cao)", moistureVal: 0.90, rainVal: 0.88, climate: "Nhiệt đới hải đảo", flowers: [{ name: "Hoa Lan Waling-Waling (Waling-Waling Orchid)", type: "Native" }, { name: "Hoa Ngọc Bích (Jade Vine)", type: "Native" }, { name: "Hoa Bông Giấy (Bougainvillea)", type: "Common" }], bio: "Hơn 7.600 hòn đảo tạo nên mức độ biệt lập địa lý cao, nuôi dưỡng nhiều loài hoa quý hiếm." },
+            { name: "Trung Quốc (China)", region: "Đông Á", lat: 35.8617, lng: 104.1954, area: "9,596,961 km²", temp: "8.2 °C", rain: "645 mm", moisture: "25% (Đa dạng)", moistureVal: 0.58, rainVal: 0.38, climate: "Ôn đới, Cận nhiệt & Cao nguyên", flowers: [{ name: "Hoa Mơ (Plum Blossom)", type: "Native" }, { name: "Hoa Mộc Tê (Osmanthus)", type: "Native" }, { name: "Hoa Cúc Vàng (Chrysanthemum)", type: "Native" }], bio: "Được mệnh danh là 'Mẹ của các khu vườn' với hơn 30.000 loài thực vật có mạch." },
+            { name: "Thụy Sĩ (Switzerland)", region: "Trung Âu", lat: 46.8182, lng: 8.2275, area: "41,285 km²", temp: "6.8 °C", rain: "1,537 mm", moisture: "33% (Cao)", moistureVal: 0.81, rainVal: 0.70, climate: "Núi cao & Ôn đới", flowers: [{ name: "Hoa Long Đởm Xanh (Alpine Gentian)", type: "Native" }, { name: "Hoa Hồng Tuyết Alps (Alpenrose)", type: "Native" }, { name: "Hoa Nghệ Tây Núi (Alpine Crocus)", type: "Native" }], bio: "Các đồng cỏ trên dãy Alps nở rộ thảm hoa nhỏ sặc sỡ ngay khi tuyết tan vào cuối xuân." },
+            { name: "Na Uy (Norway)", region: "Bắc Âu", lat: 60.4720, lng: 8.4689, area: "385,207 km²", temp: "1.9 °C", rain: "1,414 mm", moisture: "35% (Cao)", moistureVal: 0.85, rainVal: 0.66, climate: "Cận Bắc Cực & Hải dương", flowers: [{ name: "Hoa Thạch Nam Tím (Calluna Heather)", type: "Native" }, { name: "Hoa Mâm Xôi Vàng (Cloudberry Blossom)", type: "Native" }, { name: "Hoa Anh Thảo Bắc Cực (Arctic Primrose)", type: "Native" }], bio: "Thực vật Bắc Âu thích nghi với mùa hè ngắn nhưng có ánh sáng mặt trời kéo dài gần 24 giờ." },
+            { name: "New Zealand", region: "Châu Đại Dương", lat: -40.9006, lng: 174.8860, area: "268,021 km²", temp: "10.6 °C", rain: "1,732 mm", moisture: "36% (Cao)", moistureVal: 0.87, rainVal: 0.76, climate: "Ôn đới hải dương", flowers: [{ name: "Hoa Pohutukawa Đỏ (NZ Christmas Tree)", type: "Native" }, { name: "Hoa Manuka (Manuka Blossom)", type: "Native" }, { name: "Hoa Clematis Trắng (Puawhananga)", type: "Native" }], bio: "Tách biệt khỏi các lục địa hàng triệu năm tạo nên hệ thực vật rừng ôn đới nguyên sinh độc nhất." }
+        ];
+
+        let currentLayer = 'default';
+        let globeInstance = null;
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectCountry(idx) {
+            const c = countriesData[idx];
+            if (!c) return;
+            document.getElementById('countrySelect').value = idx;
+            document.getElementById('cName').textContent = c.name;
+            document.getElementById('cRegion').textContent = c.region;
+            document.getElementById('cArea').textContent = "Diện tích: " + c.area;
+            document.getElementById('cTemp').textContent = c.temp;
+            document.getElementById('cRain').textContent = c.rain;
+            document.getElementById('cMoisture').textContent = c.moisture;
+            document.getElementById('cClimate').textContent = c.climate;
+            document.getElementById('cBio').textContent = "🌿 Đa dạng sinh học: " + c.bio;
+
+            const ul = document.getElementById('cFlowers');
+            ul.innerHTML = '';
+            c.flowers.forEach(f => {
+                const li = document.createElement('li');
+                li.className = 'flower-li';
+                const cls = f.type === 'Native' ? 'badge-native' : 'badge-common';
+                li.innerHTML = `<span>${f.name}</span><span class="${cls}">${f.type}</span>`;
+                ul.appendChild(li);
+            });
+
+            if (globeInstance) {
+                globeInstance.pointOfView({ lat: c.lat, lng: c.lng, altitude: 1.8 }, 800);
+            }
+        }
+
+        function getPointColor(d) {
+            if (currentLayer === 'moisture') {
+                return d.moistureVal > 0.7 ? '#8AC926' : (d.moistureVal > 0.4 ? '#FCF6E3' : '#F5D5C8');
+            }
+            if (currentLayer === 'rainfall') {
+                return d.rainVal > 0.7 ? '#4EA8DE' : (d.rainVal > 0.4 ? '#FCF6E3' : '#D99B8C');
+            }
+            return '#F5D5C8';
+        }
+
+        function setLayer(layer, btn) {
+            currentLayer = layer;
+            document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (globeInstance) {
+                globeInstance.pointColor(d => getPointColor(d));
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const sel = document.getElementById('countrySelect');
+            countriesData.forEach((c, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `${idx + 1}. ${c.name} (${c.region})`;
+                sel.appendChild(opt);
+            });
+            selectCountry(0);
+
+            const container = document.getElementById('globeViz');
+            globeInstance = Globe()(container)
+                .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+                .backgroundColor('rgba(0,0,0,0)')
+                .pointsData(countriesData.map((c, idx) => ({ ...c, idx })))
+                .pointAltitude(0.06)
+                .pointRadius(0.65)
+                .pointColor(d => getPointColor(d))
+                .pointLabel(d => `<div style="background:#FCF6E3; color:#2B3024; padding:6px 10px; border-radius:8px; border:1.5px solid #4A553B; font-family:Nunito,sans-serif; font-weight:700;">
+                    ${d.name}<br><span style="font-size:12px; color:#4A553B;">Độ ẩm: ${d.moisture} • Mưa: ${d.rain}</span>
+                </div>`)
+                .onPointClick(d => selectCountry(d.idx));
+
+            globeInstance.controls().autoRotate = true;
+            globeInstance.controls().autoRotateSpeed = 0.6;
+
+            window.addEventListener('resize', () => {
+                globeInstance.width(container.clientWidth);
+                globeInstance.height(container.clientHeight);
+            });
+        });
+    </script>
+</body>
+</html>
